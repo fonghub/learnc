@@ -1,0 +1,10 @@
+#IDE:
+.idea
+
+#Application
+a.exe
+
+#mac
+.DS_Store
+
+
