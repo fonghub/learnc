@@ -2,6 +2,7 @@
 #define MaxSize 20
 typedef int KeyType;
 typedef char InfoType[10];
+//排序序列记录类型，包括一个排序关键字，以及记录的其他数据（可选）
 typedef struct
 {
     KeyType key;
@@ -54,8 +55,8 @@ void InsertSort1(RecType R[],int n)
             else
                 low = mid + 1;  //第i位元素比中间位置大，证明第i位元素的位置在中间位置的右边，即high不变，low = mid + 1      
         }
-        //todo
-        for ( j=i-1; i>=high+1; j--)
+        //找到目标位置后，从目标位置到最大值位置的记录，向后移动一个位置
+        for ( j=i-1; j>=high+1; j--)
             R[j+1] = R[j];
 
         R[high+1] = tmp;
@@ -69,7 +70,7 @@ int main()
     int i,n=10;
     RecType R[MaxSize];
     KeyType a[] = {9,8,7,6,5,4,3,2,1,0};
-    //赋值
+    //赋值排序关键字
     for ( i = 0; i < n; i++){
         R[i].key = a[i];
     }
