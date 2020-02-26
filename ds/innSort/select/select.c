@@ -8,6 +8,7 @@ typedef struct
     InfoType data;
 } RecType;
 
+//直接选择排序
 void SelectSort(RecType R[],int n)
 {
     int i,j,k,l;
@@ -29,6 +30,26 @@ void SelectSort(RecType R[],int n)
     }
 }
 
+void SelectSort1(RecType R[],int n)
+{
+    int i,j,k;
+    RecType tmp;
+    for ( i = 0; i < n-1; i++)
+    {
+        k = i;
+        for ( j = i+1; j < n; j++)
+            if (R[k].key > R[j].key)
+                k = j;   
+        printf("第%d层循环，最小值为：%d\n",i+1,R[k].key);
+        if (k != i)
+        {
+            tmp = R[k];
+            R[k] = R[i];
+            R[i] = tmp;
+        }
+    }
+}
+
 int main()
 {
     int i,n;
@@ -44,7 +65,7 @@ int main()
         printf("%d",R[i].key);
     printf("\n");
 
-    SelectSort(R,n);
+    SelectSort1(R,n);
 
     printf("排序后：");
     for ( i = 0; i < n; i++)
@@ -52,5 +73,3 @@ int main()
     printf("\n");
     return 0;
 }
-
-
