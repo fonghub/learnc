@@ -9,6 +9,11 @@ typedef struct
     InfoType data;
 } RecType;
 
+// 把两个有序的序列合并成一个有序的序列
+// @par R   待排序序列
+// @par low 待排序序列1首元素
+// @par mid 待排序序列1末尾元素
+// @par high    待排序序列2末尾元素
 void Merge(RecType R[], int low, int mid, int high)
 {
     RecType *R1;
@@ -57,6 +62,11 @@ void MergePass(RecType R[], int length, int n)
 void MergeSort(RecType R[], int n)
 {
     int length;
+    //确定分组规模
+    //第一次 1个/组
+    //第二次 2个/组
+    //第三次 4个/组
+    //第四次 8个/组
     for (length = 1; length < n; length = 2 * length)
         MergePass(R, length, n);
 }
@@ -64,10 +74,10 @@ void MergeSort(RecType R[], int n)
 int main()
 {
     int i, n;
-    n = 10;
+    n = 9;
     RecType R[MaxSize];
-    // KeyType a[] = {9,8,7,6,5,4,3,2,1,0};
-    KeyType a[] = {1, 8, 8, 1, 4, 7, 9, 9, 8, 6};
+    KeyType a[] = {9,8,7,6,5,4,3,2,1};
+    // KeyType a[] = {1, 8, 8, 1, 4, 7, 9, 9, 8, 6};
     for (i = 0; i < n; i++)
         R[i].key = a[i];
 
