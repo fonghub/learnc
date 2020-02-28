@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 #define MaxSize 20
 typedef int KeyType;
 typedef char InfoType[10];
