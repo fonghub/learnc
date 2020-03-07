@@ -50,9 +50,10 @@ int main()
     DestroyStack(&s);
     return 0;
 }
-
+//初始化栈
 void InitStack(LiStack **s)
 {
+    //栈头节点
     *s = (LiStack *)malloc(sizeof(LiStack));
     (*s)->next = NULL;
 }
@@ -65,6 +66,7 @@ Bool StackEmpty(LiStack *s)
         return False; 
 }
 
+//入栈
 void Push(LiStack **s,ElemType e)
 {
     LiStack *tmp = (LiStack *)malloc(sizeof(LiStack));
@@ -96,20 +98,31 @@ int StackLength(LiStack *s)
     return n;
 }
 
+//出栈
 Bool Pop(LiStack **s,ElemType *e)
 {
-    LiStack *p,*q;  //p在前，q在后
-    p = *s;
-    while(p->next != NULL)
+    if(StackEmpty(*s))
+        return False;
+
+    LiStack *p = (*s)->next;
+    *e = p->data;
+    (*s)->next = p->next;
+    free(p);
+    return True;
+}
+
+//销毁栈
+void DestroyStack(LiStack **s)
+{
+    if(StackEmpty(*s))
+        return False;
+
+    LiStack *p = (*s)->next,*q;
+    while (p != NULL)
     {
         q = p;
         p = p->next;
+        free(q);
     }
-    *e = p->data;
-    q->next = NULL;
-}
-
-void DestroyStack(LiStack **s)
-{
     free(*s);
 }
