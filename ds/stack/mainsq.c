@@ -69,8 +69,12 @@ Bool StackEmpty(SqStack *s)
 
 Bool Push(SqStack **s,ElemType e)
 {
+    //判断是否满栈
+    if((*s)->top == MaxSize)
+        return False;
     (*s)->top++;
     (*s)->data[(*s)->top] = e;
+    return True;
 }
 
 int StackLength(SqStack *s)
