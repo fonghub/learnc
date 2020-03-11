@@ -51,6 +51,7 @@ int main()
     return 0;
 }
 
+//销毁二叉树
 void DestroyBTNode(BTNode **b)
 {
     if (*b != NULL)
@@ -61,6 +62,7 @@ void DestroyBTNode(BTNode **b)
     }
 }
 
+//二叉树深度
 int BTNodeDepth(BTNode *b)
 {
     int lchilddep, rchilddep;
@@ -73,20 +75,21 @@ int BTNodeDepth(BTNode *b)
         return (lchilddep > rchilddep) ? (lchilddep + 1) : (rchilddep + 1);
     }
 }
+//左子树
 BTNode *LchildNode(BTNode *p)
 {
     if (p == NULL)
         return NULL;
     return p->lchild;
 }
-
+//右子树
 BTNode *RchildNode(BTNode *p)
 {
     if (p == NULL)
         return NULL;
     return p->rchild;
 }
-
+//括号表示法创建二叉树
 void CreateBTNode(BTNode **b, char *str)
 {
     BTNode *st[MaxSize], *p = NULL;
@@ -149,7 +152,7 @@ void DispBTNode(BTNode *b)
         }
     }
 }
-
+//查找节点
 BTNode *FindNode(BTNode *b, ElemType x)
 {
     BTNode *p;
