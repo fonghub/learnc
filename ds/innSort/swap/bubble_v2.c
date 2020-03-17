@@ -19,7 +19,7 @@ void BubbleSort(RecType R[],int n)
     for ( i = 0; i < n-1; i++)
     {
         enchange = 1;   //默认值
-        for ( j = n; j > i; j--)
+        for ( j = n-1; j > i; j--)
         {
             //从最后一个元素开始，与前一个元素比较，把较小的放前面，大的放后面
            if(R[j].key < R[j-1].key)

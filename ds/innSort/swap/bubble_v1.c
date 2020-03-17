@@ -16,7 +16,7 @@ void BubbleSort(RecType R[],int n)
     //n个元素，需要n-1次循环，每一次循环，至少确定一个元素的正确位置
     for ( i = 0; i < n-1; i++)
     {
-        for ( j = n; j > i; j--)
+        for ( j = n-1; j > i; j--)
         {
             //从最后一个元素开始，与前一个元素比较，把较小的放前面，大的放后面
            if(R[j].key < R[j-1].key)
