@@ -13,18 +13,40 @@ RDnode* generalPNode(int* nums, int numsSize);
 int longestConsecutive(int* nums, int numsSize);
 int getBaseNum(int num,int numSt);
 int getMaxNum(int* nums, int numsSize);
-RDnode* radixSort(RDnode* p,int loop);
+void radixSort(RDnode **p,int loop);
 
+/**
+ * 思路：
+对数组进行排序（基数排序算法）
+计算最长连续序列的长度
+
+因为基数排序算法满足时间复杂度O(n)，所以一看到题就有了思路，问题编程了如何使用基数排序。
+
+题目时间上有隐含条件：
+1.数组元素可能有负整数
+2.可能是空数组
+3.可能存储相同的元素
+
+对于第2，只要在开始前做一下判断，即可避免；
+对于第3点，则是记得要去重；
+第1点比较麻烦，因为基数排序不能处理负数，所以需要把数组分成正整数和负整数。
+首先把负整数数组暂时先换成正整数，然后分别对两个数组使用基数排序，返回两个有序的数据。
+接着把负整数数组进行倒置，最后把两个数组进行拼接，得到一个有序的数组。
+
+得到一个有序的数组后，接下来的问题就简单了。
+*/
 int main()
 {
+    //  考虑空数组，数据元素带有负数，重复元素
     //  数组元素均为正整数
-    int arr[] = {0,11,3,44,5,27,90,11,2,13};
-    int n = 10;
+    int arr[] = {1,2,0,1};
+    // int arr[] = {};
+    int n = 4;
     int res = longestConsecutive(&arr[0],n);
     printf("最长连续序列的长度=%d\n",res);
     return 0;
 }
-
+//  构造基数排序存储结构
 void displayPNode(RDnode *p)
 {
     while (p !=NULL)
@@ -59,55 +81,50 @@ RDnode* generalPNode(int* nums, int numsSize)
 }
 
 //  基数排序
-RDnode* radixSort(RDnode* p,int loop)
+void radixSort(RDnode **p,int loop)
 {   
-    RDnode *qSort;
     RDnode *head[10],*tail[10],*tmp;
     int i,j,k;
-    *qSort = *p;
-    // for(i=0;i<loop;i++)
-    // {
-    //     for(j=0;j<10;j++)
-    //     {
-    //         head[j] = tail[j] = NULL;
-    //     }
+    for(i=0;i<loop;i++)
+    {
+        for(j=0;j<10;j++)
+            head[j] = tail[j] = NULL;
 
-    //     while (qSort != NULL)
-    //     {
-    //         k = getBaseNum(qSort->data,i+1);
-    //         if(head[k] == NULL)
-    //         {
-    //             head[k] = qSort;
-    //             tail[k] = qSort;
-    //         }
-    //         else
-    //         {
-    //             tail[k]->next = qSort;
-    //             tail[k] = qSort;
-    //         }
-    //         qSort = qSort->next;
-    //     }
+        while ((*p) != NULL)
+        {
+            k = getBaseNum((*p)->data,i+1);
+            if(head[k] == NULL)
+            {
+                head[k] = (*p);
+                tail[k] = (*p);
+            }
+            else
+            {
+                tail[k]->next = (*p);
+                tail[k] = (*p);
+            }
+            (*p) = (*p)->next;
+        }
 
-    //     qSort = NULL;
-    //     for ( j = 0; j < 10; j++)
-    //     {
-    //         if(head[j] != NULL)
-    //         {
-    //             if(qSort == NULL)
-    //             {
-    //                 qSort = head[j];
-    //                 tmp = tail[j];
-    //             }
-    //             else
-    //             {
-    //                 tmp->next = head[j];
-    //                 tmp = tail[j];
-    //             } 
-    //         }
-    //     }
-    //     tmp->next = NULL;
-    // }
-    return qSort;
+        (*p) = NULL;
+        for ( j = 0; j < 10; j++)
+        {
+            if(head[j] != NULL)
+            {
+                if((*p) == NULL)
+                {
+                    (*p) = head[j];
+                    tmp = tail[j];
+                }
+                else
+                {
+                    tmp->next = head[j];
+                    tmp = tail[j];
+                } 
+            }
+        }
+        tmp->next = NULL;
+    }
 }
 //  求整数某一位数字
 int getBaseNum(int num,int numSt)
@@ -121,15 +138,13 @@ int getBaseNum(int num,int numSt)
     baseNum = num/numTimes%10;
     return baseNum;
 }
-//  最数组最大值
+//  求数组最大绝对值，
 int getMaxNum(int* nums, int numsSize)
 {
     int i;
     int max = 0;
     for(i=0;i<numsSize;i++)
-    {
-        if(max < nums[i]) max = nums[i];
-    }
+        if(max < abs(nums[i])) max = abs(nums[i]);
     return max;
 }
 //  求整数的位数
@@ -146,23 +161,76 @@ int	GetMaxLoop(int num)
 }
 int longestConsecutive(int* nums, int numsSize)
 {
-    RDnode *p = generalPNode(&nums[0],numsSize);
-    displayPNode(p);
+    if(numsSize < 2) return numsSize;
+    int positiveArr[numsSize],positiveNum=0,nagetiveArr[numsSize],nagetiveNum=0;
+    RDnode *nagetiveP=NULL,*positiveP=NULL;
+    int longest = 1, tmp_longest = 1;
+
     int max = getMaxNum(&nums[0],numsSize);
     int	loop = GetMaxLoop(max);
-    printf("loop = %d\t",loop);
-    // RDnode *qSort  = radixSort(p,loop);
-    // displayPNode(qSort);
-    int longest = 1, tmp_longest = 1;
-    // for (int i = 1; i < numsSize; i++)
-    // {
-    //     if(nums[i-1]+1 == nums[i])
-    //         tmp_longest++;
-    //     else
-    //     {
-    //         longest = tmp_longest>longest?tmp_longest:longest;
-    //         tmp_longest = 1;
-    //     }
-    // }
+
+    //  按正负数存储数据
+    for(int i=0;i<numsSize;i++)
+    {
+        if (nums[i] < 0)
+            nagetiveArr[nagetiveNum++] = abs(nums[i]);
+        else
+            positiveArr[positiveNum++] = nums[i];
+    }
+
+    //  构造基数排序结构，基数排序
+    if(nagetiveNum>0) 
+    {
+        nagetiveP = generalPNode(&nagetiveArr[0],nagetiveNum);
+        radixSort(&nagetiveP,loop);
+    }
+    if(positiveNum>0) 
+    {
+        positiveP = generalPNode(&positiveArr[0],positiveNum);
+        radixSort(&positiveP,loop);
+    }
+    // printf("nagetiveNum=%d\n",nagetiveNum);
+    // displayPNode(nagetiveP);
+    // printf("positiveNum=%d\n",positiveNum);
+    // displayPNode(positiveP);
+    int result[numsSize],i=0;
+    //  处理有负数的情况
+    if(nagetiveNum > 0)
+    {
+        int temp;
+        while(nagetiveP != NULL)
+        {
+            result[i++] = nagetiveP->data*-1;
+            nagetiveP = nagetiveP->next;
+        }
+        for(int i=0;i<nagetiveNum/2;i++)
+        {
+            temp = result[i];
+            result[i] = result[nagetiveNum-1-i];
+            result[nagetiveNum-1-i] = temp;
+        }
+    }
+    while(positiveP != NULL)
+    {
+        result[i++] = positiveP->data;
+        positiveP = positiveP->next;
+    }
+
+
+    for (int i = 1; i < numsSize; i++)
+    {
+        if(result[i-1]+1 == result[i])
+            tmp_longest++;
+        else if(result[i-1] == result[i])
+        {
+            continue;   //去重
+        }
+        else        
+        {
+            longest = tmp_longest>longest?tmp_longest:longest;
+            tmp_longest = 1;
+        }
+    }
+    longest = tmp_longest>longest?tmp_longest:longest;
     return longest;
 }
