@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MaxSize 150
+#define MaxSize 50
 #define true 1
 #define false 0
 
