@@ -34,6 +34,8 @@ int LocateElem(tabLink *L, ElemType e);
 Bool ListInsert(tabLink *L,int i,ElemType e);
 //  在指定序号位置删除元素
 Bool ListDelete(tabLink *L,int i,ElemType *e);
+//  销毁线性表
+void DestroyList(tabLink *L);
 
 int main()
 {
@@ -57,6 +59,7 @@ int main()
     if(ListDelete(T,1,&num)) printf("num = %d\n",num);
     else printf("false\n");
     DispList(T);
+    DestroyList(T);
     return 0;
 }
 
@@ -194,4 +197,16 @@ tabLink* InitList()
     tabLink *tmp = (tabLink *)malloc(sizeof(tabLink));
     tmp->next = NULL;
     return tmp;
+}
+
+void DestroyList(tabLink *L)
+{
+    tabLink *P;
+    while(L->next != NULL)
+    {
+        P = L;
+        L = L->next;
+        free(P);
+    }
+    free(L);
 }

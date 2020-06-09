@@ -33,6 +33,8 @@ int LocateElem(tabSeq *L, ElemType e);
 Bool ListInsert(tabSeq *L,int i,ElemType e);
 //  在指定序号位置删除元素
 Bool ListDelete(tabSeq *L,int i,ElemType *e);
+//  销毁线性表
+void DestroyList(tabSeq *L);
 
 int main()
 {
@@ -56,6 +58,7 @@ int main()
     if(ListDelete(T,1,&num)) printf("num = %d\n",num);
     else printf("false\n");
     DispList(T);
+    DestroyList(T);
     return 0;
 }
 
@@ -132,4 +135,9 @@ tabSeq* InitList()
     tabSeq *tmp = (tabSeq *)malloc(sizeof(tabSeq));
     tmp->length = 0;
     return tmp;
+}
+
+void DestroyList(tabSeq *L)
+{
+    free(L);
 }
