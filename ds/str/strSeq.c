@@ -15,7 +15,7 @@ strSeq * InitStr();                                 //  初始化串
 void StrAssign(strSeq *s,char cstr[]);              //  字符串常量cstr赋给串s
 void DispStr(strSeq *s);                            //  输出串
 strSeq * InsStr(strSeq *s,int i,strSeq *s1);        //  串插入
-void StrCopy(strSeq *s,strSeq *t);                  //  串t复制给串s
+strSeq * StrCopy(strSeq *s);                  //  串t复制给串s
 Bool StrEqual(strSeq *s,strSeq *t);                 //  判串相等
 int StrLength(strSeq *s);                           //  求串长
 strSeq * Concat(strSeq *s,strSeq *t);               //  串连接
@@ -26,7 +26,7 @@ strSeq * RepStr(strSeq *s,int i,int j,strSeq *t);   //  串替换
 
 int main()
 {
-    strSeq *s,*s1,*s2,*s3,*s4;
+    strSeq *s,*s1,*s2,*s3,*s4,*s5;
     printf("串的基本运算如下:\n");
     printf("  (0)初始化串s:\n");
     s = InitStr();
@@ -61,6 +61,16 @@ int main()
     s4 = Concat(s,s1);
     printf("  (13)输出串s4:");
     DispStr(s4);
+    printf("  (14)复制串s返回s5\n");
+    s5 = StrCopy(s);
+    printf("  (15)输出串s5:");
+    DispStr(s5);
+    printf("  (16)比较串s和s5\n");
+    if(StrEqual(s,s5))
+        printf("  (17)串s和s5相等");
+    else
+        printf("  (17)串s和s5不相等");
+    
     return 0;
 }
 
@@ -192,4 +202,28 @@ strSeq * DelStr(strSeq *s,int i,int j)
     
     tmp->length = s->length-j;
     return tmp;
+}
+
+//  t 复制给 s
+strSeq *StrCopy(strSeq *s)
+{
+    strSeq *tmp = (strSeq *)malloc(sizeof(strSeq));
+    tmp->length = 0;
+    for(int i=0;i<s->length;i++)
+        tmp->data[i] = s->data[i];
+
+    tmp->length = s->length;
+    return tmp;
+}
+
+Bool StrEqual(strSeq *s,strSeq *t)
+{
+    if(s->length != t->length)
+        return false;
+
+    for(int i=0;i<s->length;i++)
+        if(s->data[i] != t->data[i])
+            return false;
+
+    return true;
 }
