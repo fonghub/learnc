@@ -15,8 +15,8 @@ strSeq * InitStr();                                 //  初始化串
 void StrAssign(strSeq *s,char cstr[]);              //  字符串常量cstr赋给串s
 void DispStr(strSeq *s);                            //  输出串
 strSeq * InsStr(strSeq *s,int i,strSeq *s1);        //  串插入
-strSeq * StrCopy(strSeq *s);                  //  串t复制给串s
-Bool StrEqual(strSeq *s,strSeq *t);                 //  判串相等
+strSeq * StrCopy(strSeq *s);                        //  复制串s，返回新串
+Bool StrEqual(strSeq *s,strSeq *t);                 //  串相等
 int StrLength(strSeq *s);                           //  求串长
 strSeq * Concat(strSeq *s,strSeq *t);               //  串连接
 strSeq * SubStr(strSeq *s,int i,int j);             //  求子串
@@ -204,7 +204,7 @@ strSeq * DelStr(strSeq *s,int i,int j)
     return tmp;
 }
 
-//  t 复制给 s
+//  复制串s，返回新串
 strSeq *StrCopy(strSeq *s)
 {
     strSeq *tmp = (strSeq *)malloc(sizeof(strSeq));
