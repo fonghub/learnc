@@ -38,7 +38,7 @@ int bf(char *s,char *t)
             }
 
         if(flag)
-            return si+1;
+            return si;
         else
         {
             ti = 0;
