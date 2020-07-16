@@ -3,26 +3,27 @@
 
 #define MaxSize 100
 typedef char ElemType;
+
 typedef struct node
 {
-    ElemType data;       //数据元素
-    struct node *lchild; //指向左孩子
-    struct node *rchild; //指向右孩子
+    ElemType data;                          //数据元素
+    struct node *lchild;                    //指向左孩子
+    struct node *rchild;                    //指向右孩子
 } BTNode;
 
-void CreateBTNode(BTNode **b, char *str); //由str串创建二叉链
-BTNode *FindNode(BTNode *b, ElemType x);  //返回data域为x的节点指针
-BTNode *LchildNode(BTNode *p);            //返回p节点的左孩子节点指针
-BTNode *RchildNode(BTNode *p);            //返回p节点的右孩子节点指针
-int BTNodeDepth(BTNode *b);               //求二叉树b的深度
-void DispBTNode(BTNode *b);               //以括号表示法输出二叉树
-void DestroyBTNode(BTNode **b);           //销毁二叉树
+BTNode *CreateBTNode(char *str);            //由str串创建二叉树
+BTNode *FindNode(BTNode *b, ElemType x);    //返回data域为x的节点指针
+BTNode *LchildNode(BTNode *p);              //返回p节点的左孩子节点指针
+BTNode *RchildNode(BTNode *p);              //返回p节点的右孩子节点指针
+int BTNodeDepth(BTNode *b);                 //求二叉树b的深度
+void DispBTNode(BTNode *b);                 //以括号表示法输出二叉树
+void DestroyBTNode(BTNode *b);              //销毁二叉树
 
 int main()
 {
     BTNode *b, *p, *lp, *rp;
     printf("  (1)创建二叉树:");
-    CreateBTNode(&b, "A(B(D,E(H(J,K(L,M(,N))))),C(F,G(,I)))");
+    b = CreateBTNode("A(B(D,E(H(J,K(L,M(,N))))),C(F,G(,I)))");
     printf("\n");
     printf("  (2)输出二叉树:");
     DispBTNode(b);
@@ -47,18 +48,18 @@ int main()
     printf("\n");
     printf("  (4)二叉树b的深度:%d\n", BTNodeDepth(b));
     printf("  (5)释放二叉树b\n");
-    DestroyBTNode(&b);
+    DestroyBTNode(b);
     return 0;
 }
 
 //销毁二叉树
-void DestroyBTNode(BTNode **b)
+void DestroyBTNode(BTNode *b)
 {
-    if (*b != NULL)
+    if (b != NULL)
     {
-        DestroyBTNode(&(*b)->lchild);
-        DestroyBTNode(&(*b)->rchild);
-        free(*b);
+        DestroyBTNode(b->lchild);
+        DestroyBTNode(b->rchild);
+        free(b);
     }
 }
 
@@ -75,6 +76,7 @@ int BTNodeDepth(BTNode *b)
         return (lchilddep > rchilddep) ? (lchilddep + 1) : (rchilddep + 1);
     }
 }
+
 //左子树
 BTNode *LchildNode(BTNode *p)
 {
@@ -82,6 +84,7 @@ BTNode *LchildNode(BTNode *p)
         return NULL;
     return p->lchild;
 }
+
 //右子树
 BTNode *RchildNode(BTNode *p)
 {
@@ -89,12 +92,12 @@ BTNode *RchildNode(BTNode *p)
         return NULL;
     return p->rchild;
 }
+
 //括号表示法创建二叉树
-void CreateBTNode(BTNode **b, char *str)
+BTNode *CreateBTNode(char *str)
 {
-    BTNode *st[MaxSize], *p = NULL;
+    BTNode *st[MaxSize], *p = NULL,*b = NULL;
     int top = -1, k, j = 0;
-    *b = NULL;
     char ch = str[j];
     while (ch != '\0')
     {
@@ -116,8 +119,8 @@ void CreateBTNode(BTNode **b, char *str)
             p->data = ch;
             p->lchild = p->rchild = NULL;
             //第一个元素为根节点，
-            if (*b == NULL)
-                *b = p;
+            if (b == NULL)
+                b = p;
             else
             {
                 switch (k)
@@ -134,6 +137,8 @@ void CreateBTNode(BTNode **b, char *str)
         }
         ch = str[++j];
     }
+
+    return b;
 }
 
 //括号表示法输出二叉树
@@ -152,6 +157,7 @@ void DispBTNode(BTNode *b)
         }
     }
 }
+
 //查找节点
 BTNode *FindNode(BTNode *b, ElemType x)
 {
