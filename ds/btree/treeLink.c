@@ -144,17 +144,21 @@ BTNode *CreateBTNode(char *str)
 //括号表示法输出二叉树
 void DispBTNode(BTNode *b)
 {
-    if (b != NULL)
+    if(b != NULL)
     {
-        printf("%c", b->data);
-        if (b->lchild != NULL || b->rchild != NULL)
-        {
-            printf("(");
-            DispBTNode(b->lchild);
-            printf(",");
-            DispBTNode(b->rchild);
-            printf(")");
-        }
+       printf("%c",b->data); 
+       if(b->lchild != NULL || b->rchild != NULL)
+       {
+            printf("("); 
+            if(b->lchild != NULL)
+                DispBTNode(b->lchild);
+            if(b->rchild != NULL)
+            {
+                printf(","); 
+                DispBTNode(b->rchild);
+            }
+            printf(")"); 
+       }
     }
 }
 
