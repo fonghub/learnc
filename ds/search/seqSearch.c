@@ -10,6 +10,8 @@ typedef struct
 typedef NodeType SeqList[MAXL];
 
 int SeqSearch(SeqList R,int n,KeyType k);
+
+//顺序查找
 int main()
 {
     int i,n=10;
