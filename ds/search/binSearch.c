@@ -9,17 +9,21 @@ typedef struct
 } NodeType;
 typedef NodeType SeqList[MAXL];
 
+int BinSearch_r(SeqList R,int low,int high,KeyType k);
 int BinSearch(SeqList R,int n,KeyType k);
+
+// 折半查找 包含递归和非递归方式
 int main()
 {
-    int i,n=10;
+    int i,n=11;
     int result;
     SeqList R;
-    KeyType a[] = {1,3,9,12,32,41,45,62,75,77},x=77;
+    KeyType a[] = {2,3,10,15,20,25,28,29,30,35,40},x=20;
     for ( i = 0; i < n; i++)
         R[i].key = a[i];
 
-    result = BinSearch(R,10,x);
+    // result = BinSearch_r(R,0,n-1,x);
+    result = BinSearch(R,n,x);
 
     if (result > 0)
         printf("序列中第%d个是%d\n",result,x);
@@ -28,6 +32,27 @@ int main()
 
     return 0;
 }
+
+//折半查找，递归方式
+//前提条件是待查找的序列是有序的
+int BinSearch_r(SeqList R,int low,int high,KeyType k)
+{
+    int mid;
+    if (low <= high)
+    {
+        mid = (low+high)/2;
+        if (R[mid].key == k)
+            return mid+1;
+
+        if(R[mid].key > k)
+            return BinSearch_r(R,low,mid-1,k);
+        else
+            return BinSearch_r(R,mid+1,high,k);
+    }else return 0;
+    
+}
+
+
 //折半查找
 //前提条件是待查找的序列是有序的
 int BinSearch(SeqList R,int n,KeyType k)
