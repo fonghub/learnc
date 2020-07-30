@@ -14,7 +14,7 @@ void SelectSort(RecType R[],int n);
 void SelectSort_v2(RecType R[],int n);
 
 
-//  交换排序
+//  选择排序
 int main()
 {
     int n = 10;

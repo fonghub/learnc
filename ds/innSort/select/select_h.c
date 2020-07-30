@@ -14,7 +14,7 @@ void HeapSort(RecType R[],int n);
 void Heapify(RecType R[],int p,int n);
 
 
-//  交换排序
+//  选择排序
 int main()
 {
     int n = 10;
