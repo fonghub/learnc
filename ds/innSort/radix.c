@@ -71,7 +71,7 @@ RecType* generalPNode(int* nums, int numsSize)
     return p;
 }
 
-
+//  归并排序
 void RadixSort(RecType **p)
 {
     int max = getMaxNum(*p);
@@ -124,6 +124,7 @@ void RadixSort(RecType **p)
     }
 }
 
+//  返回最大关键值
 int getMaxNum(RecType *p)
 {
     int max = 0;
@@ -135,6 +136,7 @@ int getMaxNum(RecType *p)
     return max;
 }
 
+//  返回整数的位数
 int GetMaxLoop(int num)
 {
 	int bits = 1;
@@ -147,6 +149,7 @@ int GetMaxLoop(int num)
 	return bits;
 }
 
+//  返回整数指定位序号的值
 int getBaseNum(int num,int numSt)
 {
     int numTimes = 1;
